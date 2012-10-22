@@ -16,11 +16,12 @@ object Application extends Controller {
   def index = Action {
     //Ok(views.html.index("Your new application is ready."))
     //Ok("Hello,world!")
-    //Redirect(routes.Application.tasks)
-    Ok(views.html.index(Task.all(), taskForm))
+    Redirect(routes.Application.tasks)
   }
 
-  def tasks = TODO
+  def tasks = Action {
+    Ok(views.html.index(Task.all(), taskForm))
+  }
 
   def newTask = Action { implicit request =>
     taskForm.bindFromRequest.fold(
@@ -32,6 +33,9 @@ object Application extends Controller {
     )
   }
 
-  def deleteTask(id: Long) = TODO
+  def deleteTask(id: Long) = Action {
+    Task.delete(id)
+    Redirect(routes.Application.tasks)
+  }
 
 }
