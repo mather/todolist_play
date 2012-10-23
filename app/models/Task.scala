@@ -1,9 +1,8 @@
 package models
 
+import java.util.Date
 
-
-
-case class Task(id: Long, label: String)
+case class Task(id: Long, label: String, date: Date)
 
 object Task
 {
@@ -13,9 +12,8 @@ object Task
   import play.api.Play.current
 
   val task = {
-    get[Long]("id") ~
-    get[String]("label") map {
-      case id~label => Task(id, label)
+    get[Long]("id") ~ get[String]("label") ~ get[Date]("created_at") map {
+      case id~label~date => Task(id, label, date)
     }
   }
 
